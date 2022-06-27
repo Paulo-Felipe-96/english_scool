@@ -1,0 +1,23 @@
+{
+  "name": "orm-sequelize",
+  "version": "1.0.0",
+  "author": "Paulo-Felipe-96",
+  "license": "ISC",
+  "description": "Introducing ORM with MySQL and Sequelize",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev:debug": "nodemon --inspect server.js",
+    "dev": "nodemon server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
+  },
+  "volta": {
+    "node": "16.15.1"
+  }
+}
