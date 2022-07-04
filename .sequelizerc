@@ -1,5 +1,4 @@
 const pathResolver = require("path").resolve;
-// const resolve = path.resolve;
 
 module.exports = {
   config: pathResolver("src", "config", "database.mjs"),
