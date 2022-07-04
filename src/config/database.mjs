@@ -1,6 +1,7 @@
 import * as dbConfig from "./index.js";
+import Sequelize from "sequelize";
 
-const config = {
+export const sequelize = new Sequelize({
   host: dbConfig.host, //path to the database
   username: dbConfig.dbUserName, // database username
   password: dbConfig.dbPassword, // database password
@@ -12,6 +13,4 @@ const config = {
     underscored: true, // underscores table names such as user_database eg
     underscoredAll: true, // underscores column names such as user_table or invoice_table eg
   },
-};
-
-export default config;
+});
