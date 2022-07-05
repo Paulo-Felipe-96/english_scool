@@ -1,4 +1,4 @@
-const { database, dbPassword, dbUserName, host } = require("./index");
+const { database, dbPassword, dbUserName, host } = require("../config");
 
 module.exports = {
   development: {
