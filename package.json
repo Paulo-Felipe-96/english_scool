@@ -4,7 +4,6 @@
   "author": "Paulo-Felipe-96",
   "license": "ISC",
   "description": "Introducing ORM with MySQL and Sequelize",
-  "type": "module",
   "main": "server.js",
   "scripts": {
     "dev:debug": "nodemon --inspect src/server.js",

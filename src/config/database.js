@@ -1,11 +1,10 @@
-import * as dbConfig from "./index.js";
-import Sequelize from "sequelize";
+import { host, dbUserName, dbPassword, database } from "../config/index.js";
 
-export const sequelize = new Sequelize({
-  host: dbConfig.host, //path to the database
-  username: dbConfig.dbUserName, // database username
-  password: dbConfig.dbPassword, // database password
-  database: dbConfig.database, // database name
+const sequelize = {
+  host: host, //path to the database
+  username: dbUserName, // database username
+  password: dbPassword, // database password
+  database: database, // database name
   dialect: "mysql", // type of database on we are working in
   logging: false, // disables database logging
   define: {
@@ -13,4 +12,6 @@ export const sequelize = new Sequelize({
     underscored: true, // underscores table names such as user_database eg
     underscoredAll: true, // underscores column names such as user_table or invoice_table eg
   },
-});
+};
+
+export default sequelize;

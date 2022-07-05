@@ -1,5 +1,5 @@
 "use strict";
-import { sequelize } from "../config/database.mjs";
+import sequelize from "../config/database.js";
 import { Sequelize, Model } from "sequelize";
 
 class Pessoas extends Model {
@@ -22,7 +22,7 @@ Pessoas.init(
   },
   {
     sequelize,
-    modelName: "Pessoas",
+    modelName: "pessoas",
   }
 );
 
