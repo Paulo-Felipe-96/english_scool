@@ -1,8 +1,8 @@
-import express from "express";
-import routes from "../routes/index.js";
+const express = require("express");
+const routes = require("../routes");
 
 const app = express();
 
 routes(app);
 
-export default app;
+module.exports = app;

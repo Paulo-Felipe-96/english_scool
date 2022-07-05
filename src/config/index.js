@@ -1,7 +1,15 @@
-import "dotenv/config";
+const config = require("dotenv/config");
 
-export const port = process.env.PORT || 3000;
-export const dbUserName = process.env.MYSQL_ROOT;
-export const dbPassword = process.env.MYSQL_ROOT_PASSWORD;
-export const database = process.env.MYSQL_DATABASE;
-export const host = process.env.HOST || "127.0.0.1";
+const port = process.env.PORT || 3000;
+const dbUserName = process.env.MYSQL_ROOT;
+const dbPassword = process.env.MYSQL_ROOT_PASSWORD;
+const database = process.env.MYSQL_DATABASE;
+const host = process.env.HOST || "127.0.0.1";
+
+module.exports = {
+  port,
+  dbUserName,
+  dbPassword,
+  database,
+  host,
+};
