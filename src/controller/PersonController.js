@@ -11,14 +11,10 @@ class PersonController {
   }
 
   static async findPersonById(req, res) {
-    const personId = req.params.id;
+    const { id } = req.params;
 
     try {
-      const person = await db.Pessoas.findOne({
-        where: {
-          id: personId,
-        },
-      });
+      const person = await db.Pessoas.findOne({ where: { id } });
 
       person
         ? res.status(200).json(person)
@@ -29,14 +25,10 @@ class PersonController {
   }
 
   static async findPeopleByRoleName(req, res) {
-    const role = req.params.role;
+    const { role } = req.params;
 
     try {
-      const people = await db.Pessoas.findAll({
-        where: {
-          role: role,
-        },
-      });
+      const people = await db.Pessoas.findAll({ where: { role } });
 
       people.length
         ? res.status(200).json(people)
@@ -67,22 +59,15 @@ class PersonController {
 
   static async updatePersonById(req, res) {
     const data = req.body;
-    const personId = req.params.id;
+    const { id } = req.params;
     let updatedPerson;
+    const whereId = { where: { id } };
 
     try {
-      const findAndUpdate = await db.Pessoas.update(data, {
-        where: {
-          id: personId,
-        },
-      });
+      const findAndUpdate = await db.Pessoas.update(data, whereId);
 
       if (findAndUpdate[0] === 1) {
-        updatedPerson = await db.Pessoas.findOne({
-          where: {
-            id: personId,
-          },
-        });
+        updatedPerson = await db.Pessoas.findOne(whereId);
 
         res.status(200).json({
           message: "registro atualizado com sucesso",
@@ -102,17 +87,28 @@ class PersonController {
   }
 
   static async deletePersonById(req, res) {
-    const personId = req.params.id;
+    const { id } = req.params;
+
     try {
-      const findAndDelete = await db.Pessoas.destroy({
-        where: {
-          id: personId,
-        },
-      });
+      const findAndDelete = await db.Pessoas.destroy({ where: { id } });
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
         : res.status(404).json({ message: "nenhum registro encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async deleteManyById(req, res) {
+    const { data } = req.body;
+
+    try {
+      const deletePeople = await db.Pessoas.destroy({ where: { id: data } });
+
+      deletePeople
+        ? res.status(200).json({ message: "registros deletados" })
+        : res.status(404).json({ message: "nenhum registro deletado" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
