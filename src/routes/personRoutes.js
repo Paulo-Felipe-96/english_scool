@@ -1,14 +1,13 @@
-const PersonController = require("../controller/PersonController");
-const { Router } = require("express");
-const router = Router();
+const router = require("express").Router();
 const {
   findAllPeople,
-  findPeopleByRoleName,
   findPersonById,
+  findPeopleByRoleName,
   insertPerson,
   updatePersonById,
   deletePersonById,
-} = PersonController; // destructuring
+  deleteManyById,
+} = require("../controller/PersonController");
 
 router
   .get("/pessoas", findAllPeople)
@@ -16,6 +15,7 @@ router
   .get("/pessoas/role/:role", findPeopleByRoleName)
   .post("/pessoas", insertPerson)
   .put("/pessoas/:id", updatePersonById)
+  .delete("/pessoas", deleteManyById)
   .delete("/pessoas/:id", deletePersonById);
 
 module.exports = router;
