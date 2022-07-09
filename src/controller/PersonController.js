@@ -102,13 +102,21 @@ class PersonController {
 
   static async deleteManyById(req, res) {
     const { data } = req.body;
+    const isArray = Array.isArray(data);
 
     try {
-      const deletePeople = await db.Pessoas.destroy({ where: { id: data } });
+      if (isArray) {
+        const deletePeople = await db.Pessoas.destroy({ where: { id: data } });
 
-      deletePeople
-        ? res.status(200).json({ message: "registros deletados" })
-        : res.status(404).json({ message: "nenhum registro deletado" });
+        deletePeople
+          ? res.status(200).json({ message: "registros deletados" })
+          : res.status(404).json({ message: "nenhum registro deletado" });
+      } else {
+        res.status(400).json({
+          message: "verifique os dados enviados e tente novamente",
+          causedBy: data,
+        });
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
