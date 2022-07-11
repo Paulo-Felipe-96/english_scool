@@ -1,5 +1,3 @@
-const handleError = (error) => {
+module.exports = function handleError(error) {
   throw new Error(error);
 };
-
-module.exports = handleError;
