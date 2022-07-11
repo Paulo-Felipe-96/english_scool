@@ -6,8 +6,13 @@
   "description": "Introducing ORM with MySQL and Sequelize",
   "main": "server.js",
   "scripts": {
-    "dev:debug": "nodemon --inspect src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev:debug": "NODE_ENV=development nodemon --inspect src/server.js",
+    "dev": "NODE_ENV=development nodemon src/server.js",
+    "start": "NODE_ENV=production node src/server.js",
+    "db:migrateprod": "NODE_ENV=production npx sequelize-cli db:migrate",
+    "db:migratedev": "NODE_ENV=development npx sequelize-cli db:migrate",
+    "db:seedprod": "NODE_ENV=production npx sequelize-cli db:seed:all",
+    "db:seeddev": "NODE_ENV=development npx sequelize-cli db:seed:all"
   },
   "devDependencies": {
     "faker": "^6.6.6",
