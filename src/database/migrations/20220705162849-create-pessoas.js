@@ -10,12 +10,14 @@ module.exports = {
       },
       nome: {
         type: Sequelize.STRING,
+        allowNull: false,
         unique: true,
       },
       ativo: {
         type: Sequelize.BOOLEAN,
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING,
         unique: true,
       },

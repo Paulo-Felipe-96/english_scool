@@ -8,7 +8,7 @@ module.exports = {
         {
           nome: "Denise Bailey",
           ativo: 0,
-          email: "Denise.Bailey@example.com",
+          email: "denise.bailey@example.com",
           role: "docente",
           created_at: new Date(),
           updated_at: new Date(),
@@ -16,7 +16,7 @@ module.exports = {
         {
           nome: "Cameron Patterson",
           ativo: 0,
-          email: "Cameron.Patterson@example.com",
+          email: "cameron.patterson@example.com",
           role: "estudante",
           created_at: new Date(),
           updated_at: new Date(),
@@ -24,7 +24,7 @@ module.exports = {
         {
           nome: "Kara Wilson",
           ativo: 1,
-          email: "Kara.Wilson@example.org",
+          email: "kara.wilson@example.org",
           role: "docente",
           created_at: new Date(),
           updated_at: new Date(),
@@ -32,7 +32,7 @@ module.exports = {
         {
           nome: "George Reyes",
           ativo: 0,
-          email: "George.Reyes@example.net",
+          email: "george.reyes@example.net",
           role: "estudante",
           created_at: new Date(),
           updated_at: new Date(),
@@ -40,7 +40,7 @@ module.exports = {
         {
           nome: "Troy King",
           ativo: 0,
-          email: "Troy.King@example.net",
+          email: "troy.king@example.net",
           role: "docente",
           created_at: new Date(),
           updated_at: new Date(),
@@ -48,7 +48,7 @@ module.exports = {
         {
           nome: "Jessica Powers",
           ativo: 1,
-          email: "Jessica.Powers@example.org",
+          email: "jessica.powers@example.org",
           role: "estudante",
           created_at: new Date(),
           updated_at: new Date(),
@@ -56,7 +56,7 @@ module.exports = {
         {
           nome: "Gabrielle Hunter",
           ativo: 1,
-          email: "Gabrielle.Hunter@example.net",
+          email: "gabrielle.hunter@example.net",
           role: "docente",
           created_at: new Date(),
           updated_at: new Date(),
@@ -64,7 +64,7 @@ module.exports = {
         {
           nome: "James Fields",
           ativo: 1,
-          email: "James.Fields@example.net",
+          email: "james.fields@example.net",
           role: "estudante",
           created_at: new Date(),
           updated_at: new Date(),
@@ -72,7 +72,7 @@ module.exports = {
         {
           nome: "Steven Smith",
           ativo: 1,
-          email: "Steven.Smith@example.com",
+          email: "steven.smith@example.com",
           role: "docente",
           created_at: new Date(),
           updated_at: new Date(),
@@ -80,7 +80,7 @@ module.exports = {
         {
           nome: "John Ballard",
           ativo: 0,
-          email: "John.Ballard@example.org",
+          email: "john.ballard@example.org",
           role: "estudante",
           created_at: new Date(),
           updated_at: new Date(),
