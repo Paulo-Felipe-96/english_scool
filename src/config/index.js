@@ -11,7 +11,7 @@ const prod_password = process.env.MYSQL_PROD_PASSWORD;
 const dev_db = process.env.MYSQL_DEV;
 const prod_db = process.env.MYSQL_PROD;
 const host = process.env.HOST || "127.0.0.1";
-const environment = process.env.NODE_ENV;
+const environment = process.env.NODE_ENV || "development";
 
 module.exports = {
   dev_port,
