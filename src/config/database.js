@@ -14,7 +14,7 @@ module.exports = {
     username: dev_username, // database username
     password: dev_password, // database password
     database: dev_db, // database name
-    dialect: "mysql", // type of database on we are working in
+    dialect: "postgres", // type of database on we are working in
     logging: false, // disables database logging
     define: {
       freezeTableName: true, // remove plural naming as default
@@ -28,7 +28,7 @@ module.exports = {
     username: prod_username, // database username
     password: prod_password, // database password
     database: prod_db, // database name
-    dialect: "mysql", // type of database on we are working in
+    dialect: "postgres", // type of database on we are working in
     logging: false, // disables database logging
     define: {
       freezeTableName: true, // remove plural naming as default
