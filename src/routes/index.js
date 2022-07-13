@@ -1,4 +1,5 @@
 const person = require("./personRoutes");
+const level = require("./levelRoutes");
 const { environment } = require("../config");
 
 const routes = (app) => {
@@ -14,7 +15,7 @@ const routes = (app) => {
     }
   });
 
-  app.use(person);
+  app.use(person, level);
 };
 
 module.exports = routes;
