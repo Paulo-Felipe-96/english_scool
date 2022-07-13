@@ -9,6 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      id_docente: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Pessoas", key: "id" },
+      },
+      id_nivel: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: "Niveis", key: "id" },
+      },
       data_inicio: {
         type: Sequelize.DATEONLY,
       },
