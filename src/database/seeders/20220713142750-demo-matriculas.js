@@ -8,7 +8,21 @@ module.exports = {
         {
           id_estudante: 2,
           id_turma: 1,
-          status: "ativo",
+          status: "confirmado",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id_estudante: 4,
+          id_turma: 2,
+          status: "confirmado",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id_estudante: 6,
+          id_turma: 3,
+          status: "confirmado",
           created_at: new Date(),
           updated_at: new Date(),
         },

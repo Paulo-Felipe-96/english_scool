@@ -12,6 +12,20 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
+        {
+          id_docente: 3,
+          id_nivel: 2,
+          data_inicio: new Date(),
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id_docente: 5,
+          id_nivel: 3,
+          data_inicio: new Date(),
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
       ],
       {}
     );
