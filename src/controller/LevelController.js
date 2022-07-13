@@ -38,6 +38,21 @@ class LevelController {
     }
   }
 
+  static async insertLevel(req, res) {
+    const level = req.body;
+
+    try {
+      await db.Niveis.create(level);
+      res
+        .status(201)
+        .json({ message: "registro inserido com sucesso", nivel: level });
+    } catch (error) {
+      error.errors
+        ? res.status(400).json(error.errors)
+        : res.status(500).json(error);
+    }
+  }
+
   static async updateLevelById(req, res) {
     const { id } = req.params;
     const descricao = req.body;
