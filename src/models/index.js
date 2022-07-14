@@ -2,12 +2,11 @@
 
 const fs = require("fs");
 const { environment } = require("../config");
-const env = environment;
 const path = require("path");
 const Sequelize = require("sequelize");
 const connect = require("../services/dbConnect");
 const basename = path.basename(__filename);
-const dbConfig = require(__dirname + "/../config/database.js")[env];
+const dbConfig = require(__dirname + "/../config/database.js")[environment];
 const db = {};
 
 let init, sequelize;
