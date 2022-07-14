@@ -1,6 +1,6 @@
 const config = require("dotenv/config");
 
-const prod_port = process.env.PROD_PORT || 3001;
+const prod_port = process.env.PORT || 3001;
 const dev_port = process.env.DEV_PORT || 3000;
 
 const dev_username = process.env.POSTGRES_DEV_USER;
