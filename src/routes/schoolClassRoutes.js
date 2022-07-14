@@ -18,3 +18,5 @@ router.get("/turmas", findAllSchoolClasses);
 // .get("/turmas/data/?data_inicio", findAllSchoolClassByStartDate)
 // .post("/turmas", insertSchoolClass)
 // .put("/turmas/:id", updateSchoolClassById);
+
+module.exports = router;
