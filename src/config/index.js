@@ -10,7 +10,8 @@ const prod_password = process.env.POSTGRES_PROD_PASSWORD;
 
 const dev_db = process.env.DEV_DB;
 const prod_db = process.env.PROD_DB;
-const host = process.env.HOST_PROD || "ec2-3-217-14-181.compute-1.amazonaws.com";
+const host_prod = process.env.HOST_PROD || "ec2-3-217-14-181.compute-1.amazonaws.com";
+const host_dev = process.env.HOST_DEV || "127.0.0.1"
 const environment = process.env.NODE_ENV || "development";
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
   dev_password,
   prod_db,
   dev_db,
-  host,
+  host_prod,
+  host_dev,
   environment,
 };

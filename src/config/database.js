@@ -5,12 +5,13 @@ const {
   dev_password,
   prod_db,
   dev_db,
-  host,
+  host_prod,
+  host_dev
 } = require("../config");
 
 module.exports = {
   development: {
-    host: host, //path to the database
+    host: host_dev, //path to the database
     username: dev_username, // database username
     password: dev_password, // database password
     database: dev_db, // database name
@@ -24,7 +25,7 @@ module.exports = {
     },
   },
   production: {
-    host: host, //path to the database
+    host: host_prod, //path to the database
     username: prod_username, // database username
     password: prod_password, // database password
     database: prod_db, // database name
