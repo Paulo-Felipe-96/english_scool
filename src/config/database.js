@@ -29,6 +29,12 @@ module.exports = {
     password: prod_password, // database password
     database: prod_db, // database name
     dialect: "postgres", // type of database on we are working in
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
     logging: false, // disables database logging
     define: {
       freezeTableName: true, // remove plural naming as default
