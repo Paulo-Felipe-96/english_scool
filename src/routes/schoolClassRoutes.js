@@ -6,10 +6,8 @@ const {
   findSchoolClassesByTeacherId,
   findSchoolClassesByStartDate,
   insertSchoolClass,
-  // updateSchoolClassById,
+  updateSchoolClassById,
 } = require("../controller/SchoolClassController");
-
-//data inicio / docente / nivel
 
 router
   .get("/turmas/data_inicio/?", findSchoolClassesByStartDate)
@@ -17,7 +15,7 @@ router
   .get("/turmas/nivel/:id_nivel", findSchoolClassesByLevelId)
   .get("/turmas/:id", findSchoolClassById)
   .get("/turmas", findAllSchoolClasses)
-  .post("/turmas", insertSchoolClass);
-// .put("/turmas/:id", updateSchoolClassById);
+  .post("/turmas", insertSchoolClass)
+  .put("/turmas/:id", updateSchoolClassById);
 
 module.exports = router;

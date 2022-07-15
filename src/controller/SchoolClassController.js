@@ -80,7 +80,32 @@ class SchoolClassController {
       res.status(500).json({ message: error.error });
     }
   }
-  // updateSchoolClassById
+
+  static async updateSchoolClassById(req, res) {
+    const { id } = req.params;
+    const data = req.body;
+    const whereId = { where: { id } };
+
+    try {
+      const updatedSchoolClass = await db.Turmas.update(data, whereId);
+
+      if (updatedSchoolClass[0] === 1) {
+        const findSchoolClass = await db.Turmas.findOne(whereId);
+
+        res.status(200).json({
+          message: "registro atualizado com sucesso",
+          dados_atualizados: findSchoolClass,
+        });
+      } else {
+        res.status(404).json({
+          message:
+            "nenhum registro foi atualizado, verifique os dados enviados",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = SchoolClassController;
