@@ -1,7 +1,6 @@
 const db = require("../models");
 
 class SchoolClassController {
-  //get
   static async findAllSchoolClasses(req, res) {
     try {
       const schoolClasses = await db.Turmas.findAll();
@@ -10,11 +9,77 @@ class SchoolClassController {
       res.status(500).json({ message: error });
     }
   }
-  // findAllSchoolClassById
-  // findAllSchoolClassByLevelId
-  // findAllSchoolClassByTeacherId
-  // findAllSchoolClassByStartDate
-  // insertSchoolClass
+
+  static async findSchoolClassById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const schoolClass = await db.Turmas.findOne({ where: { id } });
+
+      schoolClass
+        ? res.status(200).json(schoolClass)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findSchoolClassesByLevelId(req, res) {
+    const { id_nivel } = req.params;
+
+    try {
+      const schoolClasses = await db.Turmas.findAll({ where: { id_nivel } });
+
+      schoolClasses.length
+        ? res.status(200).json(schoolClasses)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findSchoolClassesByTeacherId(req, res) {
+    const { id_docente } = req.params;
+
+    try {
+      const schoolClasses = await db.Turmas.findAll({ where: { id_docente } });
+
+      schoolClasses.length
+        ? res.status(200).json(schoolClasses)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findSchoolClassesByStartDate(req, res) {
+    const { data_inicio } = req.query;
+
+    try {
+      const schoolClasses = await db.Turmas.findAll({ where: { data_inicio } });
+
+      schoolClasses.length
+        ? res.status(200).json(schoolClasses)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async insertSchoolClass(req, res) {
+    const schoolClass = req.body;
+
+    try {
+      const newSchoolClass = await db.Turmas.create(schoolClass);
+
+      res.status(201).json({
+        message: "registro inserido com sucesso",
+        novo_revistro: newSchoolClass,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.error });
+    }
+  }
   // updateSchoolClassById
 }
 
