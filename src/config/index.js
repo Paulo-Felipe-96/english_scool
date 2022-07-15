@@ -11,7 +11,7 @@ const prod_password = process.env.POSTGRES_PROD_PASSWORD;
 const dev_db = process.env.DEV_DB;
 const prod_db = process.env.PROD_DB;
 const host_prod =
-  process.env.HOST_PROD || "ec2-3-217-14-181.compute-1.amazonaws.com";
+  process.env.HOST_PROD;
 const host_dev = process.env.HOST_DEV || "127.0.0.1";
 const environment = process.env.NODE_ENV || "development";
 
