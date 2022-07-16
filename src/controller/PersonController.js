@@ -121,6 +121,115 @@ class PersonController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static async findEnrollmentById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const enrollment = await db.Matriculas.findOne({ where: { id } });
+
+      enrollment
+        ? res.status(200).json(enrollment)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findEnrollmentByStatus(req, res) {
+    const { status } = req.query;
+
+    try {
+      const enrollment = await db.Matriculas.findOne({ where: { status } });
+
+      enrollment
+        ? res.status(200).json(enrollment)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findEnrollmentByStudantId(req, res) {
+    const { id } = req.params;
+
+    try {
+      const enrollment = await db.Matriculas.findOne({ where: { id } });
+
+      enrollment
+        ? res.status(200).json(enrollment)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findEnrollmentBySchoolClassId(req, res) {
+    const { id } = req.params;
+
+    try {
+      const enrollment = await db.Matriculas.findOne({ where: { id } });
+
+      enrollment
+        ? res.status(200).json(enrollment)
+        : res.status(404).json({ message: "registro não encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async insertEnrollment(req, res) {
+    const data = req.body;
+
+    try {
+      const newEnrollment = await db.Matriculas.create(data);
+
+      res
+        .status(201)
+        .json({ message: "registro criado com sucesso", dados: newEnrollment });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async updateEnrollmentById(req, res) {
+    const { id } = req.params;
+    const data = req.body;
+    const whereId = { where: { id } };
+
+    try {
+      const updatedEnrollment = await db.Matriculas.update(data, whereId);
+
+      if (updatedEnrollment[0] === 1) {
+        const enrollment = await db.Matriculas.findOne(whereId);
+
+        res.status(200).json({
+          message: "registro atualizado com sucesso",
+          dados: enrollment,
+        });
+      } else {
+        res.status(404).json({
+          message: "nenhum registro atualizado, verifique os dados enviados",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async deleteEnrollmentById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const findAndDelete = await db.Matriculas.destroy({ where: { id } });
+
+      findAndDelete
+        ? res.status(200).json({ message: "registro deletado" })
+        : res.status(404).json({ message: "nenhum registro encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = PersonController;
