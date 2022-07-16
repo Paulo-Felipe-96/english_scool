@@ -7,6 +7,7 @@ const {
   findSchoolClassesByStartDate,
   insertSchoolClass,
   updateSchoolClassById,
+  deleteSchoolClassById,
 } = require("../controller/SchoolClassController");
 
 router
@@ -16,6 +17,7 @@ router
   .get("/turmas/:id", findSchoolClassById)
   .get("/turmas", findAllSchoolClasses)
   .post("/turmas", insertSchoolClass)
-  .put("/turmas/:id", updateSchoolClassById);
+  .put("/turmas/:id", updateSchoolClassById)
+  .delete("/turmas/:id", deleteSchoolClassById);
 
 module.exports = router;

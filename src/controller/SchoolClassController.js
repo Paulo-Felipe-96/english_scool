@@ -106,6 +106,20 @@ class SchoolClassController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static async deleteSchoolClassById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const findAndDelete = await db.Turmas.destroy({ where: { id } });
+
+      findAndDelete
+        ? res.status(200).json({ message: "registro deletado" })
+        : res.status(404).json({ message: "nenhum registro encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = SchoolClassController;
