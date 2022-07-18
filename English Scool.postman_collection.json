@@ -1,0 +1,649 @@
+{
+	"info": {
+		"_postman_id": "1819cef6-3bc7-4911-80f7-19d682e03b62",
+		"name": "English Scool - DEV",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pessoas",
+			"item": [
+				{
+					"name": "list all people",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "hVF4CVDlbuU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod}}/pessoas",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get person by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/10",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get people by role name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/role/estudante",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"role",
+								"estudante"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert person",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Only Dev\",\n    \"ativo\": false,\n    \"email\": \"only.dev@xcom.na\",\n    \"role\": \"estudante\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/pessoas",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update person by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ativo\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/pessoas/11",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete person by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/10",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete many",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": [\n        9,\n        10\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/pessoas/",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "niveis",
+			"item": [
+				{
+					"name": "list all levels Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "hVF4CVDlbuU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod}}/niveis",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"niveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get level by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/niveis/2",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"niveis",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert level",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"conversação básica\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/niveis",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"niveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update level by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"intermediário\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/niveis/2",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"niveis",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "matriculas",
+			"item": [
+				{
+					"name": "get enrollment by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/:id",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollment by status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/status/?status=pendente",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								"status",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pendente"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollment by studant id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/estudante/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								"estudante",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollment by schoolclass id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/turma/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								"turma",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update enrollment by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"status\": \"cancelado\",\n    \"id_estudante\": 2,\n    \"id_turma\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert enrollment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"pendente\",\n    \"id_estudante\": 4,\n    \"id_turma\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete enrollment by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/pessoas/matriculas/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"pessoas",
+								"matriculas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "turmas",
+			"item": [
+				{
+					"name": "list all schoolclasses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "hVF4CVDlbuU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{prod}}/turmas",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get schoolclasses by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/turmas/7",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get schoolclasses by teacher id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/turmas/docente/5",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas",
+								"docente",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get schoolclasses by startdate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/turmas/data_inicio/?data_inicio=2021-01-04",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas",
+								"data_inicio",
+								""
+							],
+							"query": [
+								{
+									"key": "data_inicio",
+									"value": "2021-01-04"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert schoolclass",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_nivel\": 3,\n    \"id_docente\": 1,\n    \"data_inicio\": \"2022-07-15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/turmas",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update schoolclass by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"data_inicio\": \"2022-07-14\",\n        \"id_nivel\": 2,\n        \"id_docente\": 3\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{prod}}/turmas/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete schoolclass by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{prod}}/turmas/1",
+							"host": [
+								"{{prod}}"
+							],
+							"path": [
+								"turmas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "home",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "hVF4CVDlbuU",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{prod}}/",
+					"host": [
+						"{{prod}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "hVF4CVDlbuU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{prod}}/status",
+					"host": [
+						"{{prod}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
