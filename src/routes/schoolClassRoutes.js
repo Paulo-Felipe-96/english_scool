@@ -8,6 +8,7 @@ const {
   insertSchoolClass,
   updateSchoolClassById,
   deleteSchoolClassById,
+  restoreSchoolClass,
 } = require("../controller/SchoolClassController");
 
 router
@@ -17,6 +18,7 @@ router
   .get("/turmas/:id", findSchoolClassById)
   .get("/turmas", findAllSchoolClasses)
   .post("/turmas", insertSchoolClass)
+  .put("/turmas/restaurar/:id", restoreSchoolClass)
   .put("/turmas/:id", updateSchoolClassById)
   .delete("/turmas/:id", deleteSchoolClassById);
 

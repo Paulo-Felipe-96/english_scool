@@ -122,6 +122,21 @@ class PersonController {
     }
   }
 
+  static async restorePerson(req, res) {
+    const { id } = req.params;
+
+    try {
+      const restoredPerson = await db.Pessoas.restore({ where: { id } });
+
+      res.status(200).json({
+        message: "registro restaurado com sucesso",
+        registros_atualizados: restoredPerson,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async findAllEnrollments(req, res) {
     try {
       const enrollments = await db.Matriculas.findAll();
@@ -236,6 +251,21 @@ class PersonController {
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
         : res.status(404).json({ message: "nenhum registro encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async restoreEnrollment(req, res) {
+    const { id } = req.params;
+
+    try {
+      const restoredEnrollment = await db.Matriculas.restore({ where: { id } });
+
+      res.status(200).json({
+        message: "registro restaurado com sucesso",
+        registros_atualizados: restoredEnrollment,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

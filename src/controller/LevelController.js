@@ -77,6 +77,35 @@ class LevelController {
         : res.status(500).json({ message: error });
     }
   }
+
+  static async deleteLevelById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const findAndDelete = await db.Niveis.destroy({ where: { id } });
+
+      findAndDelete
+        ? res.status(200).json({ message: "registro deletado" })
+        : res.status(404).json({ message: "nenhum registro encontrado" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async restoreLevelById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const restoredSchoolClass = await db.Niveis.restore({ where: { id } });
+
+      res.status(200).json({
+        message: "registro restaurado com sucesso",
+        registros_atualizados: restoredSchoolClass,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = LevelController;

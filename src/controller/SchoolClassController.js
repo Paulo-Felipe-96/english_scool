@@ -120,6 +120,21 @@ class SchoolClassController {
       res.status(500).json({ message: error.message });
     }
   }
+
+  static async restoreSchoolClass(req, res) {
+    const { id } = req.params;
+
+    try {
+      const restoredSchoolClass = await db.Turmas.restore({ where: { id } });
+
+      res.status(200).json({
+        message: "registro restaurado com sucesso",
+        registros_atualizados: restoredSchoolClass,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = SchoolClassController;

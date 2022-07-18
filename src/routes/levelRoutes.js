@@ -5,6 +5,8 @@ const {
   findLevelByDescription,
   updateLevelById,
   insertLevel,
+  deleteLevelById,
+  restoreLevelById,
 } = require("../controller/LevelController");
 
 router
@@ -12,6 +14,8 @@ router
   .get("/niveis/:id", findLevelById)
   .get("/niveis", listAllLevels)
   .post("/niveis", insertLevel)
-  .put("/niveis/:id", updateLevelById);
+  .put("/niveis/:id", updateLevelById)
+  .put("/niveis/restaurar/:id", restoreLevelById)
+  .delete("/niveis/:id", deleteLevelById);
 
 module.exports = router;
