@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {
   findAllPeople,
+  findAllEnrollments,
   findPersonById,
   findPeopleByRoleName,
   insertPerson,
@@ -20,6 +21,7 @@ router
   .get("/pessoas", findAllPeople)
   .get("/pessoas/:id", findPersonById)
   .get("/pessoas/role/:role", findPeopleByRoleName)
+  .get("/pessoas/matriculas/todas/", findAllEnrollments)
   .get("/pessoas/matriculas/status/?", findEnrollmentByStatus)
   .get("/pessoas/matriculas/estudante/:id", findEnrollmentByStudantId)
   .get("/pessoas/matriculas/turma/:id", findEnrollmentBySchoolClassId)

@@ -122,6 +122,16 @@ class PersonController {
     }
   }
 
+  static async findAllEnrollments(req, res) {
+    try {
+      const enrollments = await db.Matriculas.findAll();
+
+      res.status(200).json(enrollments);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async findEnrollmentById(req, res) {
     const { id } = req.params;
 
