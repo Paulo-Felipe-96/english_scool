@@ -100,7 +100,9 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await db.Pessoas.destroy({ where: { id } });
+      const findAndDelete = await db.Pessoas.scope("all").destroy({
+        where: { id },
+      });
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -116,7 +118,9 @@ class PersonController {
 
     try {
       if (isArray) {
-        const deletePeople = await db.Pessoas.destroy({ where: { id: data } });
+        const deletePeople = await db.Pessoas.scope("all").destroy({
+          where: { id: data },
+        });
 
         deletePeople
           ? res.status(200).json({ message: "registros deletados" })
@@ -136,7 +140,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const restoredPerson = await db.Pessoas.restore({ where: { id } });
+      const restoredPerson = await db.Pessoas.scope("all").restore({ where: { id } });
 
       res.status(200).json({
         message: "registro restaurado com sucesso",

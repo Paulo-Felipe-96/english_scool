@@ -18,8 +18,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           nameValidation: (data) => {
-            if (data.length < 3)
+            if (!data || data !== null) {
+              throw new Error("informe seu nome");
+            }
+
+            if (data.length < 3) {
               throw new Error("o campo nome deve ter mais de 3 caracteres");
+            }
           },
         },
       },
