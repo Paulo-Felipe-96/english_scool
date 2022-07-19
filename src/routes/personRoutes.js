@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const {
+  findActivePeople,
   findAllPeople,
   findAllEnrollments,
   findPersonById,
@@ -20,8 +21,9 @@ const {
 } = require("../controller/PersonController");
 
 router
-  .get("/pessoas", findAllPeople)
-  .get("/pessoas/:id", findPersonById)
+  .get("/pessoas", findActivePeople)
+  .get("/pessoa/:id", findPersonById)
+  .get("/pessoas/todos", findAllPeople)
   .get("/pessoas/role/:role", findPeopleByRoleName)
   .get("/pessoas/matriculas/todas/", findAllEnrollments)
   .get("/pessoas/matriculas/status/?", findEnrollmentByStatus)
