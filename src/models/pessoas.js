@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           nameValidation: (data) => {
-            if (!data || data !== null) {
+            if (!data || data === null) {
               throw new Error("informe seu nome");
             }
 
