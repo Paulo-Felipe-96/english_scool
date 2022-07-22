@@ -140,7 +140,9 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const restoredPerson = await db.Pessoas.scope("all").restore({ where: { id } });
+      const restoredPerson = await db.Pessoas.scope("all").restore({
+        where: { id },
+      });
 
       res.status(200).json({
         message: "registro restaurado com sucesso",
@@ -179,9 +181,9 @@ class PersonController {
     const { status } = req.query;
 
     try {
-      const enrollment = await db.Matriculas.findOne({ where: { status } });
+      const enrollment = await db.Matriculas.findAll({ where: { status } });
 
-      enrollment
+      enrollment.length
         ? res.status(200).json(enrollment)
         : res.status(404).json({ message: "registro não encontrado" });
     } catch (error) {
