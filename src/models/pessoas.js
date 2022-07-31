@@ -35,7 +35,18 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: { args: true, msg: "dado do tipo e-mail inválido" },
         },
       },
-      role: DataTypes.STRING,
+      role: {
+        type: DataTypes.STRING,
+        validate: {
+          roleValidation: (data) => {
+            if (data !== "estudante" && data !== "docente") {
+              throw new Error(
+                `role inválida, informe "docente" ou "estudante"`
+              );
+            }
+          },
+        },
+      },
     },
     {
       sequelize,
