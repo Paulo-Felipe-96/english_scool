@@ -61,9 +61,16 @@ class PersonController {
         registro: newPerson,
       });
     } catch (error) {
-      error.errors
-        ? res.status(400).json({ message: error.errors })
-        : res.status(500).json({ message: error });
+      if (error.errors) {
+        const { message, value } = error.errors[0];
+
+        res.status(400).json({
+          message: message,
+          causedBy: value,
+        });
+      } else {
+        res.status(500).json({ message: error });
+      }
     }
   }
 
@@ -74,7 +81,7 @@ class PersonController {
     const whereId = { where: { id } };
 
     try {
-      const findAndUpdate = await db.Pessoas.update(data, whereId);
+      const findAndUpdate = await db.Pessoas.scope("all").update(data, whereId);
 
       if (findAndUpdate[0] === 1) {
         updatedPerson = await db.Pessoas.findOne(whereId);
@@ -90,9 +97,16 @@ class PersonController {
         });
       }
     } catch (error) {
-      error.errors
-        ? res.status(400).json({ message: error.errors })
-        : res.status(500).json({ message: error });
+      if (error.errors) {
+        const { message, value } = error.errors[0];
+
+        res.status(400).json({
+          message: message,
+          causedBy: value,
+        });
+      } else {
+        res.status(500).json({ message: error });
+      }
     }
   }
 
