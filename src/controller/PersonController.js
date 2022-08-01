@@ -167,6 +167,33 @@ class PersonController {
     }
   }
 
+  static async findEnrollmentByStudantId(req, res) {
+    const { id } = req.params;
+    let enrollments, person;
+
+    try {
+      person = await db.Pessoas.scope("studantRole").findOne({ where: { id } });
+
+      if (person) {
+        enrollments = await person.getConfirmedEnrollments();
+
+        if (enrollments.length) {
+          res.status(200).json(enrollments);
+        } else {
+          res.status(404).json({
+            message:
+              "nenhuma matricula foi encontrada para o estudante informado",
+            id_estudante: id,
+          });
+        }
+      } else {
+        res.status(404).json({ message: "aluno não encontrado ou inativo" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async findAllEnrollments(req, res) {
     try {
       const enrollments = await db.Matriculas.findAll();
@@ -198,20 +225,6 @@ class PersonController {
       const enrollment = await db.Matriculas.findAll({ where: { status } });
 
       enrollment.length
-        ? res.status(200).json(enrollment)
-        : res.status(404).json({ message: "registro não encontrado" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  static async findEnrollmentByStudantId(req, res) {
-    const { id } = req.params;
-
-    try {
-      const enrollment = await db.Matriculas.findOne({ where: { id } });
-
-      enrollment
         ? res.status(200).json(enrollment)
         : res.status(404).json({ message: "registro não encontrado" });
     } catch (error) {

@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       });
       Pessoas.hasMany(models.Matriculas, {
         foreignKey: "id_estudante",
+        scope: { status: "confirmado" },
+        as: "confirmedEnrollments",
       });
     }
   }
@@ -60,6 +62,11 @@ module.exports = (sequelize, DataTypes) => {
       scopes: {
         all: {
           where: {},
+        },
+        studantRole: {
+          where: {
+            role: "estudante",
+          },
         },
       },
     }
