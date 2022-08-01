@@ -1,9 +1,9 @@
-const app = require("./app/app");
+const app = require("./app");
 const { prod_port, dev_port, environment } = require("./config");
 const handleError = require("./helpers/handleError");
 
-const startApp = (env) => {
-  env === "development"
+const startApp = (environment) => {
+  environment === "development"
     ? app.listen(dev_port, () => {
         console.log(`Server is running on port: ${dev_port}`);
       })
