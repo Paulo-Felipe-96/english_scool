@@ -3,28 +3,31 @@ const { Op } = require("sequelize");
 
 class SchoolClassController {
   static async findAllSchoolClasses(req, res) {
-    let schoolClasses, dateRangeFilter;
+    let schoolClasses, where;
     const hasRangeDate = Object.keys(req.query).length;
+    const { data_inicio, data_fim } = req.query;
 
-    if (hasRangeDate === 2) {
-      const { data_inicio, data_fim } = req.query;
-
-      dateRangeFilter = {
-        where: { data_inicio: { [Op.between]: [data_inicio, data_fim] } },
+    if (data_inicio) {
+      where = {
+        where: { data_inicio: { [Op.gte]: data_inicio } },
       };
     }
 
-    if (hasRangeDate === 1) {
-      const { data_inicio } = req.query;
+    if (data_fim) {
+      where = {
+        where: { data_inicio: { [Op.lte]: data_fim } },
+      };
+    }
 
-      dateRangeFilter = {
-        where: { data_inicio: { [Op.gte]: data_inicio } },
+    if (data_inicio && data_fim) {
+      where = {
+        where: { data_inicio: { [Op.between]: [data_inicio, data_fim] } },
       };
     }
 
     try {
       hasRangeDate
-        ? (schoolClasses = await db.Turmas.findAll(dateRangeFilter))
+        ? (schoolClasses = await db.Turmas.findAll(where))
         : (schoolClasses = await db.Turmas.findAll());
 
       res.status(200).json(schoolClasses);
