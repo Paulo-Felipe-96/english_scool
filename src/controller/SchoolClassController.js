@@ -1,9 +1,35 @@
 const db = require("../models");
+const { Op, DataTypes } = require("sequelize");
+const print = console.log;
 
 class SchoolClassController {
   static async findAllSchoolClasses(req, res) {
+    let schoolClasses, dateRangeFilter;
+    const hasRangeDate = Object.keys(req.query).length;
+
+    if (hasRangeDate === 2) {
+      const { data_inicio, data_fim } = req.query;
+      print(hasRangeDate);
+
+      dateRangeFilter = {
+        where: { data_inicio: { [Op.between]: [data_inicio, data_fim] } },
+      };
+    }
+
+    if (hasRangeDate === 1) {
+      const { data_inicio } = req.query;
+      print(hasRangeDate);
+
+      dateRangeFilter = {
+        where: { data_inicio: { [Op.gte]: data_inicio } },
+      };
+    }
+
     try {
-      const schoolClasses = await db.Turmas.findAll();
+      hasRangeDate
+        ? (schoolClasses = await db.Turmas.findAll(dateRangeFilter))
+        : (schoolClasses = await db.Turmas.findAll());
+
       res.status(200).json(schoolClasses);
     } catch (error) {
       res.status(500).json({ message: error });
@@ -43,20 +69,6 @@ class SchoolClassController {
 
     try {
       const schoolClasses = await db.Turmas.findAll({ where: { id_docente } });
-
-      schoolClasses.length
-        ? res.status(200).json(schoolClasses)
-        : res.status(404).json({ message: "registro não encontrado" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  static async findSchoolClassesByStartDate(req, res) {
-    const { data_inicio } = req.query;
-
-    try {
-      const schoolClasses = await db.Turmas.findAll({ where: { data_inicio } });
 
       schoolClasses.length
         ? res.status(200).json(schoolClasses)

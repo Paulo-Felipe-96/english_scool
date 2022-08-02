@@ -4,7 +4,6 @@ const {
   findSchoolClassById,
   findSchoolClassesByLevelId,
   findSchoolClassesByTeacherId,
-  findSchoolClassesByStartDate,
   insertSchoolClass,
   updateSchoolClassById,
   deleteSchoolClassById,
@@ -12,11 +11,10 @@ const {
 } = require("../controller/SchoolClassController");
 
 router
-  .get("/turmas/data_inicio/?", findSchoolClassesByStartDate)
   .get("/turmas/docente/:id_docente", findSchoolClassesByTeacherId)
   .get("/turmas/nivel/:id_nivel", findSchoolClassesByLevelId)
-  .get("/turmas/:id", findSchoolClassById)
-  .get("/turmas", findAllSchoolClasses)
+  .get("/turmas/?", findAllSchoolClasses)
+  .get("/turma/:id", findSchoolClassById)
   .post("/turmas", insertSchoolClass)
   .put("/turmas/restaurar/:id", restoreSchoolClass)
   .put("/turmas/:id", updateSchoolClassById)
