@@ -1,6 +1,5 @@
 const db = require("../models");
-const { Op, DataTypes } = require("sequelize");
-const print = console.log;
+const { Op } = require("sequelize");
 
 class SchoolClassController {
   static async findAllSchoolClasses(req, res) {
@@ -9,7 +8,6 @@ class SchoolClassController {
 
     if (hasRangeDate === 2) {
       const { data_inicio, data_fim } = req.query;
-      print(hasRangeDate);
 
       dateRangeFilter = {
         where: { data_inicio: { [Op.between]: [data_inicio, data_fim] } },
@@ -18,7 +16,6 @@ class SchoolClassController {
 
     if (hasRangeDate === 1) {
       const { data_inicio } = req.query;
-      print(hasRangeDate);
 
       dateRangeFilter = {
         where: { data_inicio: { [Op.gte]: data_inicio } },
