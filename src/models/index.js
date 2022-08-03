@@ -9,11 +9,11 @@ const basename = path.basename(__filename);
 const dbConfig = require(__dirname + "/../config/database.js")[environment];
 const db = {};
 
-let init, sequelize;
+let connection, sequelize;
 if (dbConfig.use_env_variable) {
   sequelize = new Sequelize(process.env[dbConfig.use_env_variable], dbConfig);
 } else {
-  sequelize = connect(init, Sequelize, environment);
+  sequelize = connect(connection, Sequelize, environment);
 }
 
 fs.readdirSync(__dirname)
