@@ -208,16 +208,19 @@ class PersonController {
     const { id_turma } = req.params;
 
     try {
-      const { count } = await db.Matriculas.findAndCountAll({
+      const { count, rows } = await db.Matriculas.findAndCountAll({
         where: {
           id_turma,
+          status: "confirmado",
         },
       });
 
       count
-        ? res
-            .status(200)
-            .json({ id_turma: id_turma, quantidade_matriculas: count })
+        ? res.status(200).json({
+            id_turma: id_turma,
+            quantidade_matriculas: count,
+            registros: rows,
+          })
         : res.status(404).json({
             message: "não há registros para o id de turma informado",
             id_turma: id_turma,
