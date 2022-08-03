@@ -11,13 +11,15 @@ const {
   findEnrollmentByStatus,
   findEnrollmentByStudantId,
   findEnrollmentBySchoolClassId,
+  findAndCountEnrollmentsBySchoolClassId,
   insertEnrollment,
   updateEnrollmentById,
   deletePersonById,
   deleteManyById,
   deleteEnrollmentById,
   restorePerson,
-  restoreEnrollment,
+  restoreEnrollmentsById,
+  deleteManyEnrollmentsById,
 } = require("../controller/PersonController");
 
 router
@@ -28,14 +30,19 @@ router
   .get("/pessoas/matriculas/todas/", findAllEnrollments)
   .get("/pessoas/matriculas/status/?", findEnrollmentByStatus)
   .get("/pessoas/matriculas/estudante/:id", findEnrollmentByStudantId)
+  .get(
+    "/pessoas/matriculas/turma/:id_turma/quantidade",
+    findAndCountEnrollmentsBySchoolClassId
+  )
   .get("/pessoas/matriculas/turma/:id", findEnrollmentBySchoolClassId)
   .get("/pessoas/matriculas/:id", findEnrollmentById)
   .post("/pessoas/matriculas", insertEnrollment)
   .put("/pessoas/matriculas/:id", updateEnrollmentById)
   .put("/pessoas/restaurar/:id", restorePerson)
-  .put("/pessoas/matriculas/restaurar/:id", restoreEnrollment)
+  .post("/pessoas/matriculas/restaurar/?", restoreEnrollmentsById)
   .post("/pessoas", insertPerson)
   .put("/pessoas/:id", updatePersonById)
+  .delete("/pessoas/matriculas", deleteManyEnrollmentsById)
   .delete("/pessoas/matriculas/:id", deleteEnrollmentById)
   .delete("/pessoas", deleteManyById)
   .delete("/pessoas/:id", deletePersonById);

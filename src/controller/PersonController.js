@@ -204,6 +204,29 @@ class PersonController {
     }
   }
 
+  static async findAndCountEnrollmentsBySchoolClassId(req, res) {
+    const { id_turma } = req.params;
+
+    try {
+      const { count } = await db.Matriculas.findAndCountAll({
+        where: {
+          id_turma,
+        },
+      });
+
+      count
+        ? res
+            .status(200)
+            .json({ id_turma: id_turma, quantidade_matriculas: count })
+        : res.status(404).json({
+            message: "não há registros para o id de turma informado",
+            id_turma: id_turma,
+          });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async findEnrollmentById(req, res) {
     const { id } = req.params;
 
@@ -299,11 +322,49 @@ class PersonController {
     }
   }
 
-  static async restoreEnrollment(req, res) {
-    const { id } = req.params;
+  static async deleteManyEnrollmentsById(req, res) {
+    const { data } = req.body;
+    const isArray = Array.isArray(data);
 
     try {
-      const restoredEnrollment = await db.Matriculas.restore({ where: { id } });
+      if (isArray) {
+        const deleteEnrollments = await db.Matriculas.destroy({
+          where: { id: data },
+        });
+
+        deleteEnrollments
+          ? res.status(200).json({ message: "registros deletados" })
+          : res.status(404).json({ message: "nenhum registro deletado" });
+      } else {
+        res.status(400).json({
+          message: "verifique os dados enviados e tente novamente",
+          causedBy: data,
+        });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async restoreEnrollmentsById(req, res) {
+    const { id } = req.query;
+    const { data } = req.body;
+    let restoredEnrollment, where;
+
+    if (id && data) {
+      where = {
+        where: { id },
+      };
+    }
+
+    if (data) {
+      where = {
+        where: { id: data },
+      };
+    }
+
+    try {
+      restoredEnrollment = await db.Matriculas.restore(where);
 
       res.status(200).json({
         message: "registro restaurado com sucesso",
