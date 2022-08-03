@@ -20,6 +20,7 @@ const {
   restorePerson,
   restoreEnrollmentsById,
   deleteManyEnrollmentsById,
+  findCrowdedSchoolClasses,
 } = require("../controller/PersonController");
 
 router
@@ -28,6 +29,7 @@ router
   .get("/pessoas/todos", findAllPeople)
   .get("/pessoas/role/:role", findPeopleByRoleName)
   .get("/pessoas/matriculas/todas/", findAllEnrollments)
+  .get("/pessoas/matriculas/cheias/", findCrowdedSchoolClasses)
   .get("/pessoas/matriculas/status/?", findEnrollmentByStatus)
   .get("/pessoas/matriculas/estudante/:id", findEnrollmentByStudantId)
   .get(

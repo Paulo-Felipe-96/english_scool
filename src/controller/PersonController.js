@@ -1,4 +1,5 @@
 const db = require("../models");
+const { literal } = require("sequelize");
 
 class PersonController {
   static async findActivePeople(req, res) {
@@ -208,10 +209,11 @@ class PersonController {
     const { id_turma } = req.params;
 
     try {
-      const { count, rows } = await db.Matriculas.findAndCountAll({
+      const { count, rows } = await db.Matriculas.scope(
+        "confirmedStatus"
+      ).findAndCountAll({
         where: {
           id_turma,
-          status: "confirmado",
         },
       });
 
@@ -225,6 +227,29 @@ class PersonController {
             message: "não há registros para o id de turma informado",
             id_turma: id_turma,
           });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  static async findCrowdedSchoolClasses(req, res) {
+    const crowded = 5;
+    const agregation = {
+      attributes: ["id_turma"],
+      group: ["id_turma"],
+      having: literal(`count(id_turma) >= ${crowded}`),
+    };
+
+    try {
+      const { rows, count } = await db.Matriculas.scope(
+        "confirmedStatus"
+      ).findAndCountAll(agregation);
+
+      if (rows.length && count.length) {
+        res.status(200).json({ contagem: count, registros: rows });
+      } else {
+        res.status(404).json({ message: "não há turmas lotadas" });
+      }
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
