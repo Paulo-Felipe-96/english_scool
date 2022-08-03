@@ -7,7 +7,7 @@ const {
   dev_db,
   host_prod,
   host_dev
-} = require("../config");
+} = require(".");
 
 module.exports = {
   development: {

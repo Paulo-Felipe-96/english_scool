@@ -6,12 +6,12 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const connect = require("../services/dbConnect");
 const basename = path.basename(__filename);
-const dbConfig = require(__dirname + "/../config/database.js")[environment];
+const migrations = require(__dirname + "/../config/migrations.js")[environment];
 const db = {};
 
 let connection, sequelize;
-if (dbConfig.use_env_variable) {
-  sequelize = new Sequelize(process.env[dbConfig.use_env_variable], dbConfig);
+if (migrations.use_env_variable) {
+  sequelize = new Sequelize(process.env[migrations.use_env_variable], migrations);
 } else {
   sequelize = connect(connection, Sequelize, environment);
 }
