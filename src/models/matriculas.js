@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Matriculas",
       paranoid: true,
+      scopes: {
+        confirmedStatus: {
+          where: {
+            status: "confirmado",
+          },
+        },
+      },
     }
   );
   return Matriculas;
