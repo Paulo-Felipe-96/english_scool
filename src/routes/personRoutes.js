@@ -21,6 +21,7 @@ const {
   restoreEnrollmentsById,
   deleteManyEnrollmentsById,
   findCrowdedSchoolClasses,
+  cancelEnrollmentsAndDeactivateStudantById,
 } = require("../controller/PersonController");
 
 router
@@ -38,11 +39,12 @@ router
   )
   .get("/pessoas/matriculas/turma/:id", findEnrollmentBySchoolClassId)
   .get("/pessoas/matriculas/:id", findEnrollmentById)
+  .post("/pessoas/:id/cancelar", cancelEnrollmentsAndDeactivateStudantById)
   .post("/pessoas/matriculas", insertEnrollment)
-  .put("/pessoas/matriculas/:id", updateEnrollmentById)
-  .put("/pessoas/restaurar/:id", restorePerson)
   .post("/pessoas/matriculas/restaurar/?", restoreEnrollmentsById)
   .post("/pessoas", insertPerson)
+  .put("/pessoas/matriculas/:id", updateEnrollmentById)
+  .put("/pessoas/restaurar/:id", restorePerson)
   .put("/pessoas/:id", updatePersonById)
   .delete("/pessoas/matriculas", deleteManyEnrollmentsById)
   .delete("/pessoas/matriculas/:id", deleteEnrollmentById)

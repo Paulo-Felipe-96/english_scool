@@ -311,6 +311,36 @@ class PersonController {
     }
   }
 
+  static async cancelEnrollmentsAndDeactivateStudantById(req, res) {
+    const { id } = req.params;
+
+    try {
+      const person = await db.Pessoas.scope("studantRole").update(
+        { ativo: false },
+        { where: { id } }
+      );
+
+      if (person[0] === 1) {
+        const enrollments = await db.Matriculas.update(
+          { status: "cancelado" },
+          { where: { id_estudante: id } }
+        );
+
+        res.status(200).json({
+          message: "sucesso",
+          id_estudante: id,
+          registros_afetados: enrollments,
+        });
+      } else {
+        res
+          .status(404)
+          .json({ message: "estudante não encontrado ou inativo" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async updateEnrollmentById(req, res) {
     const { id } = req.params;
     const data = req.body;
