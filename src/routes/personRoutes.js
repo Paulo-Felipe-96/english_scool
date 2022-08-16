@@ -25,9 +25,9 @@ const {
 } = require("../controller/PersonController");
 
 router
-  .get("/pessoas", findActivePeople)
+  .get("/pessoas", findAllPeople)
   .get("/pessoa/:id", findPersonById)
-  .get("/pessoas/todos", findAllPeople)
+  .get("/pessoas/ativas", findActivePeople)
   .get("/pessoas/role/:role", findPeopleByRoleName)
   .get("/pessoas/matriculas/todas/", findAllEnrollments)
   .get("/pessoas/matriculas/cheias/", findCrowdedSchoolClasses)
