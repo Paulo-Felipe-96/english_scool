@@ -1,19 +1,21 @@
-const db = require("../models");
-const { literal } = require("sequelize");
+const { PersonServices } = require("../services");
+const personServices = new PersonServices();
 
 class PersonController {
+  // there is a default scope where ativo equals true
   static async findActivePeople(req, res) {
     try {
-      const people = await db.Pessoas.findAll();
+      const people = await personServices.getActivePeople();
       res.status(200).json(people);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
 
+  // there is a specific scope where all records are returned
   static async findAllPeople(req, res) {
     try {
-      const people = await db.Pessoas.scope("all").findAll();
+      const people = await personServices.getAllPeople();
 
       res.status(200).json(people);
     } catch (error) {
