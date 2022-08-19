@@ -26,6 +26,20 @@ module.exports = {
           created_at: new Date(),
           updated_at: new Date(),
         },
+        {
+          id_estudante: 6,
+          id_turma: 3,
+          status: "pendente",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          id_estudante: 6,
+          id_turma: 3,
+          status: "cancelado",
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
       ],
       {}
     );
