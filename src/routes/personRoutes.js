@@ -10,7 +10,6 @@ const {
   findEnrollmentById,
   findEnrollmentByStatus,
   findEnrollmentByStudantId,
-  findEnrollmentBySchoolClassId,
   findAndCountEnrollmentsBySchoolClassId,
   insertEnrollment,
   updateEnrollmentById,
@@ -37,14 +36,13 @@ router
     "/pessoas/matriculas/turma/:id_turma/quantidade",
     findAndCountEnrollmentsBySchoolClassId
   )
-  .get("/pessoas/matriculas/turma/:id", findEnrollmentBySchoolClassId)
   .get("/pessoas/matriculas/:id", findEnrollmentById)
   .post("/pessoas/:id/cancelar", cancelEnrollmentsAndDeactivateStudantById)
   .post("/pessoas/matriculas", insertEnrollment)
   .post("/pessoas/matriculas/restaurar/?", restoreEnrollmentsById)
   .post("/pessoas", insertPerson)
+  .post("/pessoas/restaurar/:id", restorePerson)
   .put("/pessoas/matriculas/:id", updateEnrollmentById)
-  .put("/pessoas/restaurar/:id", restorePerson)
   .put("/pessoas/:id", updatePersonById)
   .delete("/pessoas/matriculas", deleteManyEnrollmentsById)
   .delete("/pessoas/matriculas/:id", deleteEnrollmentById)
