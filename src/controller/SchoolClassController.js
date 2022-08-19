@@ -1,6 +1,6 @@
-const db = require("../models");
 const { Op } = require("sequelize");
-
+const { SchoolClassServices } = require("../services");
+const schoolClassServices = new SchoolClassServices();
 class SchoolClassController {
   static async findAllSchoolClasses(req, res) {
     let schoolClasses, where;
@@ -27,12 +27,14 @@ class SchoolClassController {
 
     try {
       hasRangeDate
-        ? (schoolClasses = await db.Turmas.findAll(where))
-        : (schoolClasses = await db.Turmas.findAll());
+        ? (schoolClasses = await schoolClassServices.getAllRecordsRangeDate(
+            where
+          ))
+        : (schoolClasses = await schoolClassServices.getAllRecords());
 
       res.status(200).json(schoolClasses);
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: error.message });
     }
   }
 
@@ -40,7 +42,7 @@ class SchoolClassController {
     const { id } = req.params;
 
     try {
-      const schoolClass = await db.Turmas.findOne({ where: { id } });
+      const schoolClass = await schoolClassServices.getOneRecord({ id });
 
       schoolClass
         ? res.status(200).json(schoolClass)
@@ -54,7 +56,9 @@ class SchoolClassController {
     const { id_nivel } = req.params;
 
     try {
-      const schoolClasses = await db.Turmas.findAll({ where: { id_nivel } });
+      const schoolClasses = await schoolClassServices.getAllRecords({
+        id_nivel,
+      });
 
       schoolClasses.length
         ? res.status(200).json(schoolClasses)
@@ -68,7 +72,9 @@ class SchoolClassController {
     const { id_docente } = req.params;
 
     try {
-      const schoolClasses = await db.Turmas.findAll({ where: { id_docente } });
+      const schoolClasses = await schoolClassServices.getAllRecords({
+        id_docente,
+      });
 
       schoolClasses.length
         ? res.status(200).json(schoolClasses)
@@ -82,7 +88,9 @@ class SchoolClassController {
     const schoolClass = req.body;
 
     try {
-      const newSchoolClass = await db.Turmas.create(schoolClass);
+      const newSchoolClass = await schoolClassServices.createRecord(
+        schoolClass
+      );
 
       res.status(201).json({
         message: "registro inserido com sucesso",
@@ -96,13 +104,13 @@ class SchoolClassController {
   static async updateSchoolClassById(req, res) {
     const { id } = req.params;
     const data = req.body;
-    const whereId = { where: { id } };
+    let updatedSchoolClass;
 
     try {
-      const updatedSchoolClass = await db.Turmas.update(data, whereId);
+      updatedSchoolClass = await schoolClassServices.updateRecord(data, id);
 
       if (updatedSchoolClass[0] === 1) {
-        const findSchoolClass = await db.Turmas.findOne(whereId);
+        const findSchoolClass = await schoolClassServices.getOneRecord({ id });
 
         res.status(200).json({
           message: "registro atualizado com sucesso",
@@ -123,7 +131,7 @@ class SchoolClassController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await db.Turmas.destroy({ where: { id } });
+      const findAndDelete = await schoolClassServices.deleteRecord(id);
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -137,7 +145,7 @@ class SchoolClassController {
     const { id } = req.params;
 
     try {
-      const restoredSchoolClass = await db.Turmas.restore({ where: { id } });
+      const restoredSchoolClass = await schoolClassServices.restoreRecord(id);
 
       res.status(200).json({
         message: "registro restaurado com sucesso",

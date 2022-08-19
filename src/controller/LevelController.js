@@ -1,9 +1,11 @@
-const db = require("../models");
+const { LevelServices } = require("../services");
+const levelServices = new LevelServices();
 
 class LevelController {
   static async listAllLevels(req, res) {
     try {
-      const levels = await db.Niveis.findAll();
+      const levels = await levelServices.getAllRecords();
+
       res.status(200).json(levels);
     } catch (error) {
       res.status(500).json({ message: error });
@@ -14,7 +16,7 @@ class LevelController {
     const { id } = req.params;
 
     try {
-      const level = await db.Niveis.findOne({ where: { id } });
+      const level = await levelServices.getOneRecord({ id });
 
       level
         ? res.status(200).json(level)
@@ -25,16 +27,16 @@ class LevelController {
   }
 
   static async findLevelByDescription(req, res) {
-    const { descricao } = req.params;
+    const { descricao } = req.query;
 
     try {
-      const level = await db.Niveis.findOne({ where: { descricao } });
+      const level = await levelServices.getOneRecord({ descricao });
 
       level
         ? res.status(200).json(level)
         : res.status(404).json({ message: "registro não encontrado" });
     } catch (error) {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: error.message });
     }
   }
 
@@ -42,7 +44,7 @@ class LevelController {
     const level = req.body;
 
     try {
-      await db.Niveis.create(level);
+      await levelServices.createRecord(level);
       res
         .status(201)
         .json({ message: "registro inserido com sucesso", nivel: level });
@@ -59,7 +61,7 @@ class LevelController {
     let findAndUpdate;
 
     try {
-      findAndUpdate = await db.Niveis.update(descricao, { where: { id } });
+      findAndUpdate = await levelServices.updateRecord(descricao, id);
 
       if (findAndUpdate[0] === 1) {
         res.status(200).json({
@@ -82,7 +84,7 @@ class LevelController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await db.Niveis.destroy({ where: { id } });
+      const findAndDelete = await levelServices.deleteRecord(id);
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -96,7 +98,7 @@ class LevelController {
     const { id } = req.params;
 
     try {
-      const restoredSchoolClass = await db.Niveis.restore({ where: { id } });
+      const restoredSchoolClass = await levelServices.restoreRecord(id);
 
       res.status(200).json({
         message: "registro restaurado com sucesso",

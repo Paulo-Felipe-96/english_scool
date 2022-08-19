@@ -1,6 +1,7 @@
-const { PersonServices } = require("../services");
+const { PersonServices, EnrollmentServices } = require("../services");
 const personServices = new PersonServices();
-
+const enrollmentServices = new EnrollmentServices();
+const transactionDb = require("../models");
 class PersonController {
   // there is a default scope where ativo equals true
   static async findActivePeople(req, res) {
@@ -27,7 +28,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const person = await db.Pessoas.findOne({ where: { id } });
+      const person = await personServices.getOneRecord({ id });
 
       person
         ? res.status(200).json(person)
@@ -41,7 +42,7 @@ class PersonController {
     const { role } = req.params;
 
     try {
-      const people = await db.Pessoas.findAll({ where: { role } });
+      const people = await personServices.getAllPeople({ role });
 
       people.length
         ? res.status(200).json(people)
@@ -57,7 +58,7 @@ class PersonController {
     const data = req.body;
 
     try {
-      const newPerson = await db.Pessoas.create(data);
+      const newPerson = await personServices.createRecord(data);
 
       res.status(201).json({
         message: "registro inserido com sucesso",
@@ -80,14 +81,13 @@ class PersonController {
   static async updatePersonById(req, res) {
     const data = req.body;
     const { id } = req.params;
-    let updatedPerson;
-    const whereId = { where: { id } };
+    let updatedPerson, findAndUpdate;
 
     try {
-      const findAndUpdate = await db.Pessoas.scope("all").update(data, whereId);
+      findAndUpdate = await personServices.updatePerson(data, id);
 
       if (findAndUpdate[0] === 1) {
-        updatedPerson = await db.Pessoas.findOne(whereId);
+        updatedPerson = await personServices.getOneRecord({ id });
 
         res.status(200).json({
           message: "registro atualizado com sucesso",
@@ -117,9 +117,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await db.Pessoas.scope("all").destroy({
-        where: { id },
-      });
+      const findAndDelete = await personServices.deletePerson(id);
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -135,9 +133,7 @@ class PersonController {
 
     try {
       if (isArray) {
-        const deletePeople = await db.Pessoas.scope("all").destroy({
-          where: { id: data },
-        });
+        const deletePeople = await personServices.deleteManyPeople(data);
 
         deletePeople
           ? res.status(200).json({ message: "registros deletados" })
@@ -157,9 +153,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const restoredPerson = await db.Pessoas.scope("all").restore({
-        where: { id },
-      });
+      const restoredPerson = await personServices.restorePerson(id);
 
       res.status(200).json({
         message: "registro restaurado com sucesso",
@@ -175,7 +169,7 @@ class PersonController {
     let enrollments, person;
 
     try {
-      person = await db.Pessoas.scope("studantRole").findOne({ where: { id } });
+      person = await personServices.getStudantById(id);
 
       if (person) {
         enrollments = await person.getConfirmedEnrollments();
@@ -199,7 +193,7 @@ class PersonController {
 
   static async findAllEnrollments(req, res) {
     try {
-      const enrollments = await db.Matriculas.findAll();
+      const enrollments = await enrollmentServices.getAllRecords();
 
       res.status(200).json(enrollments);
     } catch (error) {
@@ -211,13 +205,8 @@ class PersonController {
     const { id_turma } = req.params;
 
     try {
-      const { count, rows } = await db.Matriculas.scope(
-        "confirmedStatus"
-      ).findAndCountAll({
-        where: {
-          id_turma,
-        },
-      });
+      const { count, rows } =
+        await enrollmentServices.getAndCountEnrollentsBySchoolClassId(id_turma);
 
       count
         ? res.status(200).json({
@@ -235,17 +224,9 @@ class PersonController {
   }
 
   static async findCrowdedSchoolClasses(req, res) {
-    const crowded = 5;
-    const agregation = {
-      attributes: ["id_turma"],
-      group: ["id_turma"],
-      having: literal(`count(id_turma) >= ${crowded}`),
-    };
-
     try {
-      const { rows, count } = await db.Matriculas.scope(
-        "confirmedStatus"
-      ).findAndCountAll(agregation);
+      const { rows, count } =
+        await enrollmentServices.getCrowdedSchoolClasses();
 
       if (rows.length && count.length) {
         res.status(200).json({ contagem: count, registros: rows });
@@ -261,7 +242,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const enrollment = await db.Matriculas.findOne({ where: { id } });
+      const enrollment = await enrollmentServices.getOneRecord({ id });
 
       enrollment
         ? res.status(200).json(enrollment)
@@ -275,23 +256,9 @@ class PersonController {
     const { status } = req.query;
 
     try {
-      const enrollment = await db.Matriculas.findAll({ where: { status } });
+      const enrollment = await enrollmentServices.getAllRecords({ status });
 
       enrollment.length
-        ? res.status(200).json(enrollment)
-        : res.status(404).json({ message: "registro não encontrado" });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
-  static async findEnrollmentBySchoolClassId(req, res) {
-    const { id } = req.params;
-
-    try {
-      const enrollment = await db.Matriculas.findOne({ where: { id } });
-
-      enrollment
         ? res.status(200).json(enrollment)
         : res.status(404).json({ message: "registro não encontrado" });
     } catch (error) {
@@ -303,7 +270,7 @@ class PersonController {
     const data = req.body;
 
     try {
-      const newEnrollment = await db.Matriculas.create(data);
+      const newEnrollment = await enrollmentServices.createRecord(data);
 
       res
         .status(201)
@@ -317,19 +284,18 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      db.sequelize.transaction(async (transaction) => {
-        const person = await db.Pessoas.scope("studantRole").update(
-          { ativo: false },
-          { where: { id } },
-          { transaction: transaction }
+      transactionDb.sequelize.transaction(async (transaction) => {
+        const person = await personServices.deactivateStudantById(
+          id,
+          transaction
         );
 
         if (person[0] === 1) {
-          const enrollments = await db.Matriculas.update(
-            { status: "cancelado" },
-            { where: { id_estudante: id } },
-            { transaction: transaction }
-          );
+          const enrollments =
+            await enrollmentServices.cancelEnrollmentsAfterDeactivateStudant(
+              id,
+              transaction
+            );
 
           res.status(200).json({
             message: "sucesso",
@@ -350,13 +316,12 @@ class PersonController {
   static async updateEnrollmentById(req, res) {
     const { id } = req.params;
     const data = req.body;
-    const whereId = { where: { id } };
 
     try {
-      const updatedEnrollment = await db.Matriculas.update(data, whereId);
+      const updatedEnrollment = await enrollmentServices.updateRecord(data, id);
 
       if (updatedEnrollment[0] === 1) {
-        const enrollment = await db.Matriculas.findOne(whereId);
+        const enrollment = await enrollmentServices.getOneRecord({ id });
 
         res.status(200).json({
           message: "registro atualizado com sucesso",
@@ -376,7 +341,7 @@ class PersonController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await db.Matriculas.destroy({ where: { id } });
+      const findAndDelete = await enrollmentServices.deleteRecord(id);
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -392,9 +357,8 @@ class PersonController {
 
     try {
       if (isArray) {
-        const deleteEnrollments = await db.Matriculas.destroy({
-          where: { id: data },
-        });
+        const deleteEnrollments =
+          await enrollmentServices.deleteManyRecordsById(data);
 
         deleteEnrollments
           ? res.status(200).json({ message: "registros deletados" })
@@ -413,7 +377,7 @@ class PersonController {
   static async restoreEnrollmentsById(req, res) {
     const { id } = req.query;
     const { data } = req.body;
-    let restoredEnrollment, where;
+    let restoredEnrollments, where;
 
     if (id && data) {
       where = {
@@ -428,11 +392,17 @@ class PersonController {
     }
 
     try {
-      restoredEnrollment = await db.Matriculas.restore(where);
+      transactionDb.sequelize.transaction(async (transaction) => {
+        restoredEnrollments =
+          await enrollmentServices.restoreManyEnrollmentsById(
+            where,
+            transaction
+          );
 
-      res.status(200).json({
-        message: "registro restaurado com sucesso",
-        registros_atualizados: restoredEnrollment,
+        res.status(200).json({
+          message: "registro restaurado com sucesso",
+          registros_atualizados: restoredEnrollments,
+        });
       });
     } catch (error) {
       res.status(500).json({ message: error.message });
