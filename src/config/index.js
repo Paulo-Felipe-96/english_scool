@@ -10,13 +10,15 @@ const prod_password = process.env.POSTGRES_PROD_PASSWORD;
 
 const dev_db = process.env.DEV_DB;
 const prod_db = process.env.PROD_DB;
-const host_prod =
-  process.env.HOST_PROD;
+const host_prod = process.env.HOST_PROD;
 const host_dev = process.env.HOST_DEV || "127.0.0.1";
 const environment = process.env.NODE_ENV || "development";
 
-const prod_options = {
+const production = {
   dialect: "postgres", // type of database on we are working in
+  username: prod_username, // database username
+  password: prod_password, // database password
+  database: prod_db,
   dialectOptions: {
     ssl: {
       require: true,
@@ -32,8 +34,11 @@ const prod_options = {
   },
 };
 
-const dev_options = {
+const development = {
   dialect: "postgres", // type of database on we are working in
+  username: dev_username, // database username
+  password: dev_password, // database password
+  database: dev_db,
   logging: false, // disables database logging
   define: {
     freezeTableName: true, // remove plural naming as default
@@ -55,6 +60,6 @@ module.exports = {
   host_prod,
   host_dev,
   environment,
-  prod_options,
-  dev_options,
+  production,
+  development,
 };
