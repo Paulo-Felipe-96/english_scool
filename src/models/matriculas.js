@@ -35,11 +35,16 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Matriculas",
       paranoid: true,
+      defaultScope: {
+        where: {},
+        order: [["id", "ASC"]],
+      },
       scopes: {
         confirmedStatus: {
           where: {
             status: "confirmado",
           },
+          order: [["id", "ASC"]],
         },
       },
     }

@@ -58,15 +58,18 @@ module.exports = (sequelize, DataTypes) => {
         where: {
           ativo: true,
         },
+        order: [["id", "ASC"]],
       },
       scopes: {
         all: {
           where: {},
+          order: [["id", "ASC"]],
         },
         studantRole: {
           where: {
             role: "estudante",
           },
+          order: [["id", "ASC"]],
         },
       },
     }

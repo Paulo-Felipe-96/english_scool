@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Niveis",
       paranoid: true,
+      defaultScope: {
+        where: {},
+        order: [["id", "ASC"]],
+      },
     }
   );
   return Niveis;

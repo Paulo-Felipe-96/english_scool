@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Turmas",
       paranoid: true,
+      defaultScope: {
+        where: {},
+        order: [["id", "ASC"]],
+      },
     }
   );
   return Turmas;
