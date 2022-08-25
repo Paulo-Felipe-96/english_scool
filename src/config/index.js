@@ -1,7 +1,6 @@
 const config = require("dotenv/config");
 
-const prod_port = process.env.PORT || 3001;
-const dev_port = process.env.DEV_PORT || 3000;
+const app_port = process.env.APP_PORT || 3000;
 
 const dev_username = process.env.POSTGRES_DEV_USER;
 const dev_password = process.env.POSTGRES_DEV_PASSWORD;
@@ -49,8 +48,7 @@ const development = {
 };
 
 module.exports = {
-  dev_port,
-  prod_port,
+  app_port,
   prod_username,
   prod_password,
   dev_username,
