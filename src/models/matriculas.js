@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
           where: {
             status: "confirmado",
           },
-          order: [["id", "ASC"]],
+          order: [["id_turma", "ASC"]],
         },
       },
     }
