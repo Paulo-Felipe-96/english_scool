@@ -3,25 +3,23 @@
   "version": "1.0.0",
   "author": "Paulo-Felipe-96",
   "license": "ISC",
-  "description": "Introducing ORM with MySQL and Sequelize",
+  "description": "Introducing ORM with Postgres and Sequelize",
   "main": "server.js",
   "scripts": {
     "dev:debug": "NODE_ENV=development nodemon --inspect src/server.js",
     "dev": "NODE_ENV=development nodemon src/server.js",
     "start": "NODE_ENV=production node src/server.js",
-    "db:migrateprod": "NODE_ENV=production npx sequelize-cli db:migrate",
-    "db:migratedev": "NODE_ENV=development npx sequelize-cli db:migrate",
-    "db:seedprod": "NODE_ENV=production npx sequelize-cli db:seed:all",
-    "db:seeddev": "NODE_ENV=development npx sequelize-cli db:seed:all"
+    "db:migrateProd": "NODE_ENV=production npx sequelize-cli db:migrate",
+    "db:migrateDev": "NODE_ENV=development npx sequelize-cli db:migrate",
+    "db:seedProd": "NODE_ENV=production npx sequelize-cli db:seed:all",
+    "db:seedDev": "NODE_ENV=development npx sequelize-cli db:seed:all"
   },
   "devDependencies": {
-    "faker": "^6.6.6",
     "nodemon": "^2.0.18"
   },
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mysql2": "^2.3.3",
     "path": "^0.12.7",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
