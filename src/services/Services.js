@@ -21,12 +21,12 @@ class Services {
     return database[this.modelName].create(data);
   }
 
-  async updateRecord(data, id) {
-    return database[this.modelName].update(data, { where: { id } });
+  async updateRecord(data, where = {}) {
+    return database[this.modelName].update(data, { where: { ...where } });
   }
 
-  async deleteRecord(id) {
-    return database[this.modelName].destroy({ where: { id } });
+  async deleteRecord(where = {}) {
+    return database[this.modelName].destroy({ where: { ...where } });
   }
 
   async deleteManyRecordsById(data) {
@@ -35,8 +35,8 @@ class Services {
     });
   }
 
-  async restoreRecord(id) {
-    return database[this.modelName].restore({ where: { id } });
+  async restoreRecord(where = {}) {
+    return database[this.modelName].restore({ where: { ...where } });
   }
 }
 

@@ -16,30 +16,28 @@ class PersonServices extends Services {
       .findAll({ where: { ...where } });
   }
 
-  async getStudantById(id) {
+  async getStudantById(where = {}) {
     return database[this.modelName]
       .scope("studantRole")
-      .findOne({ where: { id } });
+      .findOne({ where: { ...where } });
   }
 
-  async updatePerson(data, id) {
+  async updatePerson(data, where = {}) {
     return database[this.modelName]
       .scope("all")
-      .update(data, { where: { id } });
+      .update(data, { where: { ...where } });
   }
 
-  async deactivateStudantById(id, transaction) {
+  async deactivateStudantById(where = {}) {
     return database[this.modelName]
       .scope("studantRole")
-      .update(
-        { ativo: false },
-        { where: { id } },
-        { transaction: transaction }
-      );
+      .update({ ativo: false }, { where: { ...where } });
   }
 
-  async deletePerson(id) {
-    return database[this.modelName].scope("all").destroy({ where: { id } });
+  async deletePerson(where = {}) {
+    return database[this.modelName]
+      .scope("all")
+      .destroy({ where: { ...where } });
   }
 
   async deleteManyPeople(data) {
@@ -48,8 +46,10 @@ class PersonServices extends Services {
       .destroy({ where: { id: data } });
   }
 
-  async restorePerson(id) {
-    return database[this.modelName].scope("all").restore({ where: { id } });
+  async restorePerson(where = {}) {
+    return database[this.modelName]
+      .scope("all")
+      .restore({ where: { ...where } });
   }
 }
 

@@ -1,3 +1,5 @@
+// todo: add transactions
+
 const { LevelServices } = require("../services");
 const levelServices = new LevelServices();
 
@@ -58,12 +60,13 @@ class LevelController {
   static async updateLevelById(req, res) {
     const { id } = req.params;
     const descricao = req.body;
-    let findAndUpdate;
+    let hasUpdate;
 
     try {
-      findAndUpdate = await levelServices.updateRecord(descricao, id);
+      const findAndUpdate = await levelServices.updateRecord(descricao, { id });
+      hasUpdate = findAndUpdate[0] === 1;
 
-      if (findAndUpdate[0] === 1) {
+      if (hasUpdate) {
         res.status(200).json({
           message: "registro atualizado com sucesso",
         });
@@ -84,7 +87,7 @@ class LevelController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await levelServices.deleteRecord(id);
+      const findAndDelete = await levelServices.deleteRecord({ id });
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -98,7 +101,7 @@ class LevelController {
     const { id } = req.params;
 
     try {
-      const restoredSchoolClass = await levelServices.restoreRecord(id);
+      const restoredSchoolClass = await levelServices.restoreRecord({ id });
 
       res.status(200).json({
         message: "registro restaurado com sucesso",

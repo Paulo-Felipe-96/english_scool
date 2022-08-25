@@ -1,6 +1,9 @@
+// todo: add transactions
+
 const { Op } = require("sequelize");
 const { SchoolClassServices } = require("../services");
 const schoolClassServices = new SchoolClassServices();
+
 class SchoolClassController {
   static async findAllSchoolClasses(req, res) {
     let schoolClasses, where;
@@ -104,10 +107,11 @@ class SchoolClassController {
   static async updateSchoolClassById(req, res) {
     const { id } = req.params;
     const data = req.body;
-    let updatedSchoolClass;
 
     try {
-      updatedSchoolClass = await schoolClassServices.updateRecord(data, id);
+      const updatedSchoolClass = await schoolClassServices.updateRecord(data, {
+        id,
+      });
 
       if (updatedSchoolClass[0] === 1) {
         const findSchoolClass = await schoolClassServices.getOneRecord({ id });
@@ -131,7 +135,7 @@ class SchoolClassController {
     const { id } = req.params;
 
     try {
-      const findAndDelete = await schoolClassServices.deleteRecord(id);
+      const findAndDelete = await schoolClassServices.deleteRecord({ id });
 
       findAndDelete
         ? res.status(200).json({ message: "registro deletado" })
@@ -145,7 +149,9 @@ class SchoolClassController {
     const { id } = req.params;
 
     try {
-      const restoredSchoolClass = await schoolClassServices.restoreRecord(id);
+      const restoredSchoolClass = await schoolClassServices.restoreRecord({
+        id,
+      });
 
       res.status(200).json({
         message: "registro restaurado com sucesso",

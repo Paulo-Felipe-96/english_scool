@@ -7,10 +7,10 @@ class EnrollmentServices extends Services {
     super("Matriculas");
   }
 
-  async getAndCountEnrollentsBySchoolClassId(id_turma) {
+  async getAndCountEnrollentsBySchoolClassId(where = {}) {
     return database[this.modelName].scope("confirmedStatus").findAndCountAll({
       where: {
-        id_turma,
+        ...where,
       },
     });
   }
@@ -28,16 +28,22 @@ class EnrollmentServices extends Services {
       .findAndCountAll(agregation);
   }
 
-  async cancelEnrollmentsAfterDeactivateStudant(id, transaction) {
-    return database[this.modelName].update(
-      { status: "cancelado" },
-      { where: { id_estudante: id } },
-      { transaction: transaction }
-    );
+  async cancelEnrollmentsAfterDeactivateStudant(id) {
+    return database.sequelize.transaction(async (transaction) => {
+      await database[this.modelName].update(
+        { status: "cancelado" },
+        { where: { id_estudante: id } },
+        { transaction: transaction }
+      );
+    });
   }
 
-  async restoreManyEnrollmentsById(where, transaction) {
-    return database[this.modelName].restore(where, { transaction });
+  async restoreManyEnrollmentsById(where) {
+    return database.sequelize.transaction(async (transaction) => {
+      await database[this.modelName].restore(where, {
+        transaction: transaction,
+      });
+    });
   }
 }
 
